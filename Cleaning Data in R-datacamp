@@ -59,3 +59,39 @@ unite(dataframe, new column, names of all columns to be joined,sep="-")  #defaul
 #multiple types of observation units are stored in the same
 # example: owner and pet in the same table
 arrange() the rows of census2 by the YEAR column. #census2 <- arrange(census2, YEAR)
+
+####################Preparing data for analysis#####################################################################################
+as.character()
+as.integer() #turn numeric to integer
+as.numeric()
+as.factor()
+as.logical()
+#lubridate package
+library(lubridate)
+ymd("_____") #year-month-date
+mdy("_____")
+hms("_____") #hour-min-seconds
+ymd_hms("_____")
+
+# Load the lubridate package
+library(lubridate)
+
+# Parse as date
+dmy("17 Sep 2015")
+
+# Parse as date and time (with no seconds!)
+mdy_hm("July 15, 2012 12:56")
+
+# Coerce dob to a date (with no time)
+students2$dob <- ymd(students2$dob)
+
+# Coerce nurse_visit to a date and time
+students2$nurse_visit <-ymd_hms(students2$nurse_visit) 
+    
+# Look at students2 once more with str()
+str(students2)
+#########################################################string manipulation################################
+str_trim("     this is a test       ") #trim leading and trailing white space
+str_pad("11111",width=7,side="left",pad="0") #if the lendgth is not 7, pad the left sides with 0 until it's 7 digits
+str_detect(vector,"string") #search for the presence of a string in vector
+str_replace(vector,"string being replaced","new one to replace") 
