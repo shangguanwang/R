@@ -1,0 +1,61 @@
+# R
+# the first several rows of a matrix or data frame using head, and use tail to obtain the last several rows. 
+head(x, n=6) #default is 6 rows
+x – A matrix, data frame, or vector.
+n – The first n rows
+
+tail(weather, 50)
+str(weather) #can be called on any object # rows-observations, col-variables #list each columns
+#############################
+class(file) #check type
+dim(file) #return r & c
+names(file) #column names
+
+load(dplyr)
+glimpse(file) #better version of str
+summary(file) #5 number summary of each column
+#tables in R often have the type data.frame
+################################
+hist(dataframe$column) #visualize the frequency of a variable
+plot(dataframe$x,dataframe$y) #scatterplot
+#################################################################### Gather-make wide longer
+#tidying: structuring datasets to facilitate analysis.
+#messy data example: coloumn headers are values, not variable names
+#tidyr data #https://blog.rstudio.org/2014/07/22/introducing-tidyr/
+#gather:used when you have columns that are not variables and you want to collapse them into key-value pairs.
+#turn coloumn names into values of a new variable use gather
+gather(dataframe,newcol-variable, newcol-value,-col) #-col means leave the col column
+# key是宽数据变为长数据时存放需要编码的variable name, value是需要数据转换的变量的value. 
+#把横的变成竖的，第二个argument把横的header变成一个column的value，第三个argument把横的value变成一个column
+################
+#This is useful when values in a column should actually be column names (i.e. variables)
+spread(dataset,key,value)
+#the second argument takes the name of the column to spread into new columns (type), and the third argument takes the column that contains the value with which to fill in the newly spread out columns
+> pets
+     owner type num
+1    Jason  dog   2
+2    Jason  cat   4
+3    Jason bird   3
+4     Lisa  dog   7
+5     Lisa  cat  10
+6     Lisa bird   9
+7 Terrence  dog   8
+8 Terrence  cat   5
+9 Terrence bird   1
+
+> spread(pets,type,num)
+     owner bird cat dog
+1    Jason    3   4   2
+2     Lisa    9  10   7
+3 Terrence    1   5   8
+################################################################ separate one column to several columns
+separate(___, col = ___, into = c("___", "___"), sep = "___") #＃注意引号，vector
+separate(dataframe, the column to separate, into new column names,sep="-") #separator specify which character to separate on
+unite(dataframe, new column, names of all columns to be joined,sep="-")  #default is underscore_
+###############################
+#examples of messy data
+#values stored in one column should be several column names -spread()
+#prmary key in relational table: a single observational unit is stored in multiple tables
+#multiple types of observation units are stored in the same
+# example: owner and pet in the same table
+arrange() the rows of census2 by the YEAR column. #census2 <- arrange(census2, YEAR)
