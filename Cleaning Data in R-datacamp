@@ -92,6 +92,123 @@ students2$nurse_visit <-ymd_hms(students2$nurse_visit)
 str(students2)
 #########################################################string manipulation################################
 str_trim("     this is a test       ") #trim leading and trailing white space
-str_pad("11111",width=7,side="left",pad="0") #if the lendgth is not 7, pad the left sides with 0 until it's 7 digits
+str_pad("11111",width=7,side="left",pad="0") #if the lendgth is not 7, pad the left sides with 0 until it's 7 digits #QUOTATION MARK
 str_detect(vector,"string") #search for the presence of a string in vector
 str_replace(vector,"string being replaced","new one to replace") 
+tolower()
+toupper()
+#########################################################################################
+library(stringr)
+# Detect all dates of birth (dob) in 1997
+str_detect(students2$dob,"1997")
+
+# In the sex column, replace "F" with "Female"...
+students2$sex <- str_replace(students2$sex,"F","Female")
+#Special values: Inf-"Infinite value", NaN-"Not a number"
+#find missing values
+any(is.na(dataframe)) #are there any NAs?
+summary(dataframe)
+complete.cases(dataframe) #find rows with no missing values, return logical values
+dataframe[complete.cases(dataframe), ]#subset data, keeping only complete cases
+na.omit(dataframe) #remove rows with missing values
+
+# Call table() on the status column
+table(social_df$status)
+
+# Replace all empty strings in status with NA
+social_df$status[social_df$status == ""] <- NA
+# Use complete.cases() to see which rows have no missing values
+complete.cases(social_df)
+
+###############outliers
+set.seed(10)
+x<-c(rnorm(30,mean=15,sd=5),-5,28,35) #normally distributed
+boxplot(df,horizontal= TRUE) #default is vertical, one plot for a column
+
+# use Min and Max in summary()
+hist(df#column, breaks=20) #number of brackets
+
+# View a histogram of absences, but force zeros to be bucketed to the right of zero
+hist(students3$absences,right=FALSE)
+#the default of histogram is (a,b]. You can change this with the right=FALSE option, which would change the intervals to be of the form [a,b).  
+#This is important if you have a lot of points exactly at the breakpoint.
+
+#########  gather, new col name
+column names are values. In particular, the column names X1-X31 represent days of the month, which should really be values of a new variable called day.
+> df
+  subject age        t1         t2         t3
+1       X  34 0.6753014 -0.7438284  0.2333987
+2       Y  88 0.3588532  0.9038673 -0.5104356
+3       Z  35 0.3971684  0.7129142  1.3817088
+> gather(df,time,val,t1:t3)
+  subject age time        val
+1       X  34   t1  0.6753014
+2       Y  88   t1  0.3588532
+3       Z  35   t1  0.3971684
+4       X  34   t2 -0.7438284
+5       Y  88   t2  0.9038673
+6       Z  35   t2  0.7129142
+7       X  34   t3  0.2333987
+8       Y  88   t3 -0.5104356
+9       Z  35   t3  1.3817088
+#################################### spread(df,newcol,colname-newvalue under the column)
+values are variable names. 
+ values in the measure column should be variables (i.e. column names)
+ when you do dataframe[, -1] you get the sub-array that does not include the first column.
+weather2 <- weather2[, -1]  # remove the first column of a dataframe
+
+# Load the stringr and lubridate packages
+library(stringr)
+library(lubridate)
+
+
+# Remove X's from day column
+weather3$day <- str_replace(weather3$day,"X","")
+
+# Unite the year, month, and day columns
+weather4 <- unite(weather3, date, year, month,day, sep = "-")
+
+# Convert date column to proper date format using lubridates's ymd()
+weather4$date <- ymd(weather4$date)
+
+# Rearrange columns using dplyr's select()
+weather5 <- select(weather4, date, Events, CloudCover:WindDirDegrees)
+
+# View the head of weather5
+head(weather5)
+#####################################
+which(is.na(x$b)) #find indices of missing values in column b
+
+# Count missing values
+sum(is.na(weather6))
+
+# Find missing values
+summary(weather6)
+
+# Find indices of NAs in Max.Gust.SpeedMPH
+ind <- which(is.na(weather6$Max.Gust.SpeedMPH))
+
+# Look at the full rows for records missing Max.Gust.SpeedMPH
+weather6[ind, ]
+
+##################################################################
+# Find row with Max.Humidity of 1000
+ind <- which((weather6$Max.Humidity==1000))
+
+# Look at the data for that day
+weather6[ind, ]
+
+# Change 1000 to 100
+weather6$Max.Humidity[ind] <-100
+####################################################################
+# Get index of row with -1 value
+ind <- which(weather6$Mean.VisibilityMiles==-1)
+
+# Look at full row
+weather6[ind,]  #index matrix need two elements, rows and columns
+
+# Set Mean.VisibilityMiles to the appropriate value
+weather6$Mean.VisibilityMiles[ind] <- 10
+##############################################################
+names(df)<-vector of names
+df$col[df$col=="oldvalue"]<-"Newvalue"
