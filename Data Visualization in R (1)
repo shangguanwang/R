@@ -131,4 +131,35 @@ bagplot(Cars93$Min.Price,Cars93$Max.Price,cex=1.2)
 # Add an equality reference line
 #Use the abline() function to add a dashed equality reference line with intercept 0 and slope 1.
 abline(a=0,b=1,lty=2) #a is intercept, b is slope, linetype is lty=dashline 2
+################################################Plotting correlation matrices with the corrplot() function
+#Apply the cor() function to this subset to compute the correlation matrix containing the correlation coefficients between all variable pairs. Save the result as corrMat.
+#Apply the corrplot() function to display this correlation matrix, using the "ellipse" method.
 
+# Load the corrplot library for the corrplot() function
+library(corrplot)
+
+# Extract the numerical variables from UScereal
+numericalVars<-UScereal[2:10]
+
+# Compute the correlation matrix for these variables (all variables, two-two comparison)
+corrMat<-cor(numericalVars)
+
+# Generate the correlation ellipse plot
+corrplot(corrMat,method="ellipse")
+######################################Building and plotting rpart() models
+#Load the rpart package to make the rpart() modeling function and the associated methods for generic functions like plot() available.
+#Use the rpart() function to fit a decision tree model tree_model that predicts medv in the Boston data frame from all of the other variables in this data frame.
+#Apply the plot() function to tree_model to obtain an unlabelled plot of the structure of this decision tree model.
+#Apply the text() function to tree_model to label this plot. To make the labels easier to read, use the cex parameter to reduce the text to 70% of the default size.
+
+# Load the rpart library
+library(rpart)
+
+# Fit an rpart model to predict medv from all other Boston variables
+tree_model<-rpart(medv~.,data=Boston)
+
+# Plot the structure of this decision tree model
+plot(tree_model)
+
+# Add labels to this plot
+text(tree_model,cex=0.7)
