@@ -111,4 +111,24 @@ mtCor<-cor(df-mtcars)
 library(corrplot)
 corrplot(mtCor, method="ellipse") #ellipse downwards mean r close to -1, ellipse upwards means r close to 1, circle means r close to 0
 
+#decision tree-rattle
+library(rpart) #rpart used to plot decison tree
+treeModel<-rpart(mpg~., data=df)
+plot(treeModel)
+text(treeModel,cex=1.6,col="red",xpd=TRUE)
+###############################################Using the bagplot() function
+boxplot(varaible,variable)
+
+# Create a side-by-side boxplot summary
+boxplot(Cars93$Min.Price,Cars93$Max.Price)
+# Load aplpack to make the bagplot() function available
+library(aplpack)
+
+# Create a bagplot for the same two variables
+bagplot(Cars93$Min.Price,Cars93$Max.Price,cex=1.2)
+#Use the cex parameter to make the point sizes in this plot 20 percent larger than the default size.
+
+# Add an equality reference line
+#Use the abline() function to add a dashed equality reference line with intercept 0 and slope 1.
+abline(a=0,b=1,lty=2) #a is intercept, b is slope, linetype is lty=dashline 2
 
