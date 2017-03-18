@@ -1,0 +1,105 @@
+###############some options can be specified globally
+library(MASS)
+par(mfrow=c(1,2)) #put multiple graphs together
+par(cex.main=0.8) #text size of title
+plot(df$x, df$y)
+title("some text")
+############## options that can only be specified locally
+library(MASS)
+index<-which(df$variable==after) #which gives the index
+indexA<-which(whiteside$Insul=="After")
+indexB<-which(whhiteside$Insul=="Before")
+x<-whiteside$Temp
+y<-whiteside$Gas
+plot(x[indexA],y[indexA], type="o"(lines overlaid with points-line&points), pch=16, xlim=range(x),ylim=range(y),xlab="sometext",ylab="some text")  #high-level function
+lines(x[indexB],y[indexB], type="o",pch=1) #low-level function
+legend("text", pch=c(1,16),legend=c("text1","text2"))
+title("sometext")
+#high-level function generates an initial plot, while low=level functions like points, lines add details to an existing plots
+#type="n" no plot, set up an initial empty plot
+############### practice
+#Specifically, a call to the par() function with no parameters specified will return a list whose element names each specify a graphics parameter and whose element values specify the corresponding default values of these parameters. These parameters may be set by a call in the form par(name = value) where name is the name of the parameter to be set and value is the value to be assigned to this parameter.
+#Capture the return from the par() function as the character vector plot_pars.
+#Show the names of these graphics parameters by calling names() on plot_pars.
+#Show the number of parameters in this list by calling length()
+
+# Assign the return value from the par() function to plot_pars
+plot_pars<-par()   #empty par() generates a data table
+
+# Display the names of the par() function's list elements
+names(plot_pars)
+
+# Display the number of par() function list elements
+length(plot_pars)
+
+#########################Exploring the type option
+#mfrow, which specifies the numbers of rows and columns in an array of plots. Valid values for this parameter are two-element numerical vectors, whose first element specifies the number of rows in the plot array and the second element specifies the number of rows.
+#The specific type values used here are:
+#"p" for "points"
+#"l" for "lines"
+#"o" for "overlaid" (i.e., lines overlaid with points)
+#"s" for "steps"
+######################## Practice
+#Use the par() function to set the mfrow parameter for a two-by-two plot array.
+#Generate a plot of brain weights from the Animals2 data frame, with observations plotted as points and the title "points" by calling the title() function.
+#Repeat, with observations plotted as lines and the title "lines".
+#Repeat, with observations plotted as overlaid points and lines and the title "overlaid".
+#Repeat, with observations plotted as steps and the title "steps".
+
+# Set up a 2-by-2 plot array
+par(mfrow=c(2,2))
+
+# Plot the Animals2 brain weight data as points
+plot(Animals2$brain,type="p")
+
+# Add the title
+title("points")
+
+# Plot the brain weights with lines
+plot(Animals2$brain,type="l")
+
+# Add the title
+title("lines")
+
+# Plot the brain weights as lines overlaid with points
+plot(Animals2$brain,type="o")
+
+# Add the title
+title("overlaid")
+
+# Plot the brain weights as steps
+plot(Animals2$brain,type="s")
+
+# Add the title
+title("steps")
+#################################################################
+#type = "n" is useful when we are plotting data from multiple sources on a common set of axes. In such cases, we can compute ranges for the x- and y-axes so that all data points will appear on the plot, and then add the data with subsequent calls to points() or lines() as appropriate.
+#This exercise asks you to generate a plot that compares mileage vs. horsepower data from two different sources: the mtcars data frame in the datasets package and the Cars93 data frame in the MASS package. To distinguish the different results from these data sources, the graphics parameter pch is used to specify point shapes. 
+#Compute max_hp as the maximum of Horsepower from the Cars93 data frame and hp from the mtcars data frame.
+#Compute max_mpg as the maximum of MPG.city from the Cars93 data frame, MPG.highway from this data frame, and mpg from the mtcars data frame.
+#Using the type = "n" option, set up a plot with an x-axis that runs from zero to max_hp and a y-axis that runs from zero to max_mpg, with labels Horsepower and Miles per gallon.
+#Using the points() function, add mpg vs. hp from the mtcars data frame to the plot as open circles (pch = 1).
+#Using the points() function, add MPG.city vs. Horsepower to the plot as solid squares (pch = 15).
+#Using the points() function, add MPG.highway vs. Horsepower to the plot as open triangles pointing upwards (pch = 6)
+
+# Compute max_hp
+max_hp <- max(Cars93$Horsepower, mtcars$hp)
+
+# Compute max_mpg
+max_mpg <- max(Cars93$MPG.city, Cars93$MPG.highway, mtcars$mpg)
+
+# Create plot with type = "n"               
+plot(max_hp,max_mpg,
+     type = "n", xlim = c(0, max_hp),
+     ylim = c(0,max_mpg), xlab = "Horsepower",
+     ylab = "Miles per gallon")
+
+# Add open circles to plot
+points(mtcars$hp, mtcars$mpg, pch = 1)
+
+# Add solid squares to plot
+points(Cars93$Horsepower,Cars93$MPG.city,pch=15)
+
+# Add open triangles to plot
+points(Cars93$Horsepower,Cars93$MPG.highway,pch=6)
+##################################################################
