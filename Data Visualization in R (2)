@@ -102,4 +102,7 @@ points(Cars93$Horsepower,Cars93$MPG.city,pch=15)
 
 # Add open triangles to plot
 points(Cars93$Horsepower,Cars93$MPG.highway,pch=6)
-##################################################################
+##################################################################adding lines and points to plots fuva
+lines(density(df$variable), lwd=2, col="blue")
+abline(a=intercept,b=intercept,lty=2, lwd=2) #straight line
+
