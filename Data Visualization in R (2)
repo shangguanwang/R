@@ -106,3 +106,106 @@ points(Cars93$Horsepower,Cars93$MPG.highway,pch=6)
 lines(density(df$variable), lwd=2, col="blue")
 abline(a=intercept,b=intercept,lty=2, lwd=2) #straight line
 
+lty = 1 specifying solid lines, lty = 2 specifying dashed lines, and lty = 3 specifying dotted lines.
+Create a numerical variable x with 200 evenly-spaced values from 0 to 10.
+Using the dnorm() function, generate a vector gauss1 of Gaussian probability densities for this range of x values, with mean 2 and standard deviation 0.2.
+Using the dnorm() function, generate a vector gauss2 of Gaussian probability densities for this range of x values, with mean 4 and standard deviation 0.5.
+Generate a plot of gauss1 vs. x with lines and a y-axis label "Gaussian probability density".
+Using the lines() function, add a second dashed line for gauss2 vs. x with relative width 3.
+
+# Create the numerical vector x
+x <- seq(0, 10, length =200)
+
+# Compute the Gaussian density for x with mean 2 and standard deviation 0.2
+gauss1 <- dnorm(x, mean = 2, sd = 0.2)
+
+# Compute the Gaussian density with mean 4 and standard deviation 0.5
+gauss2<-dnorm(x,mean=4,sd=0.5)
+
+# Plot the first Gaussian density
+plot(x, gauss1,type="l", ylab="Gaussian probability density")
+
+# Add lines for the second Gaussian density
+lines(x,gauss2, lty=2,lwd=3)
+#########################################
+#Create an empty plot of mpg vs. hp from the mtcars data frame, with axis labels "Horsepower" and "Gas mileage".
+#Using the points() function, add the mpg vs. hp data, with pch specified by the numeric values of cyl.
+#Repeat both of the previous steps, except with pch specified by the character values of cyl.
+
+# Create an empty plot using type = "n"
+plot(mtcars$hp,mtcars$mpg,type="n", xlab="Horsepower",ylab="Gas mileage")
+
+# Add points with shapes determined by cylinder number
+points(mtcars$hp,mtcars$mpg,pch = mtcars$cyl)
+
+# Create a second empty plot
+plot(mtcars$hp,mtcars$mpg,type="n", xlab="Horsepower",ylab="Gas mileage")
+
+# Add points with shapes as cylinder characters
+points(mtcars$hp,mtcars$mpg,pch = as.character(mtcars$cyl))
+##############################Adding trend lines from linear regression models
+#the command abline(a = 0, b = 1) adds an equality reference line with zero intercept and unit (i.e. 1) slope: points for which y = x fall on this reference line, while points with y > x fall above it, and points with y < x fall below it.
+#An alternative way of specifying these parameters is through a linear regression model that determines them from data. One common application is to generate a scatterplot of y versus x, then fit a linear model that predicts y from x, and finally call abline() to add this best fit line to the plot.
+#The standard R function that fits linear regression models is lm(), which supports the formula interface. Thus, to fit a linear model that predicts y from x in the data frame df, the call would be lm(y ~ x, data = df).
+
+#Use the lm() function to create linear_model, a linear regression model that predicts Gas from Temp from the whiteside data frame.
+#Generate a scatterplot of Gas vs. Temp.
+#Using the abline() function, add a dashed reference line that shows the predictions of linear_model.
+
+# Build a linear regression model for the whiteside data
+linear_model<-lm(Gas~Temp,data=whiteside)
+
+# Create a Gas vs. Temp scatterplot from the whiteside data
+plot(whiteside$Temp,whiteside$Gas)
+
+# Use abline() to add the linear regression line
+abline(linear_model,lty=2)
+##################################################### Adding text to plots
+Axis lables: xlab(),ylab()
+Titles: plot(density(df$col), main="XX: \n YY" # create two-line title with\n
+Legends
+Text in plot itself: text(x,y, labels, adj, srt=30, col="red". cex=1.2,font=2) #x and y where the text will be added. #adj is alignment =0.5 default, adj=1 right justifies text. 
+#srt: angles of orientation 
+#cex=text size, 1.2 = 20% larger than original 
+
+#Create a scatterplot of MPG.city vs. Horsepower from the Cars93 data frame, with points represented as solid squares. Recall that the pch value for solid squares is 15.
+#Create the variable index3 using the which() function that identifies all 3-cylinder cars.
+#Label the Make of each 3-cylinder car in the Cars93 data frame using the text() function.
+#Use the zoom feature in the Plots window to see this plot more clearly.
+
+# Create MPG.city vs. Horsepower plot with solid squares
+plot(Cars93$Horsepower, Cars93$MPG.city,pch=15)
+
+# Create index3, pointing to 3-cylinder cars
+index3<-which(Cars93$Cylinders==3)
+
+# Add text giving names of cars next to data points
+text(x = Cars93$Horsepower[index3], 
+     y = Cars93$MPG.city[index3],
+     labels = Cars93$Make[index3],
+     adj = 0)
+####################################################  Adjusting text position, size, and font
+#font = 1 is the default text font (neither italic nor bold), font = 2 specifies bold face text, font = 3 specifies italic text, and font = 4 specifies both bold and italic text.
+#Create a plot of MPG.city vs. Horsepower from the Cars93 data frame, with data represented as open circles.
+#Construct the variable index3 using the which() function that identifies the row numbers containing all 3-cylinder cars.
+#Use the points() function to overlay solid circles on top of all points in the plot that represent 3-cylinder cars.
+#Use the text() function with the Make variable as before to add labels to the right of the 3-cylinder cars, but now use adj = -0.2 to move the labels further to the right, use the cex argument to increase the label size by 20 percent, and use the font argument to make the labels bold italic.
+
+# Plot MPG.city vs. Horsepower as open circles
+plot(Cars93$Horsepower, Cars93$MPG.city, pch = 1)
+
+# Create index3, pointing to 3-cylinder cars
+index3 <- which(Cars93$Cylinders == 3)
+
+# Highlight 3-cylinder cars as solid circles
+points(Cars93$Horsepower[index3],
+       Cars93$MPG.city[index3],
+       pch = 16)
+
+# Add car names, offset from points, with larger bold text
+text(Cars93$Horsepower[index3],
+     Cars93$MPG.city[index3],
+     Cars93$Make[index3],
+     adj = -0.2, cex = 1.2, font = 4)
+     ######################################################
+     
