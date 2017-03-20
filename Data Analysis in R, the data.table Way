@@ -1,0 +1,81 @@
+#data.frame is a set of columns wih same length but different type.
+#df[i,j,by] #subset df's rows using i, then calculate j grouped by BY
+#SQL[where,select,group by]
+
+#create data.table(Col,Col2,Col3)
+DT<-data.table(A=1:6,B=c("a","b","c"),C=rnorm(6), D=TRUE)  
+
+#you can use L after a numeric to specify that it is an integer.
+# typeof(1L)=="integer"
+#add two underscore to mkae NA integer: typeof(NA)=="logical" V.S. #typeof(NA_integer_)=="integer"
+
+#selecting rows by number in i
+# for data table: DT[3:5] is the same as DT[3:5,] #BUT for data.frame, has to have the , otherwise get an error
+#data.table is a data.frame too
+
+################## Exercise#############
+You can also give columns with different lengths when creating a data.table, and R will "recycle" the shorter column to match the length of the longer one by re-using the first items
+data.table(x = c("A", "B"), y = 1:4)
+   x y
+1: A 1
+2: B 2
+3: A 3
+4: B 4
+
+## Instructions
+1. Create a data.table my_first_data_table with a column x = c("a", "b", "c", "d", "e") and a column y = c(1, 2, 3, 4, 5). Use the function data.table().
+2. Create a two-column data.table DT that contains the four integers 1, 2, 1 and 2 in the first column a and the letters A, B, C and D in the second column b. Use recycling so that the contents of a will be automatically used twice. Note that LETTERS[1] returns "A", LETTERS[2] returns "B", and so on.
+3. Select the third row of DT and just print the result to the console.
+4. Select the second and third rows without using commas and print the result to the console.
+
+# The data.table package is preloaded
+library(data.table)
+
+# Create my_first_data_table
+1. my_first_data_table <- data.table(x = c("a","b","c","d","e"), 
+                                  y =c(1, 2, 3, 4, 5))  
+  
+# Create a data.table using recycling
+2. DT <- data.table(a = c(1L, 2L), b = LETTERS[1:4])
+
+# Print the third row to the console
+3. DT[3]
+
+# Print the second and third row to the console without using commas
+4 DT[2:3]
+################## DT[row], LETTERS[1]="A",Rembmer to include L after 1 and 2
+
+#####################################  Getting to know a data.table  #################################
+You can pass a data.table to base R functions like head() and tail() that accept a data.frame because data.tables are also data.frames. Also, keep in mind that the special symbol .N, when used inside square brackets, contains the number of rows. For example, DT[.N] and DT[nrow(DT)] will both return the last row in DT.
+1. Select the second to last row of the table using .N.
+2. Return the column names() of the data.table.
+3. Return the number of rows and number of columns of the data.table using the dim() function.
+4. Select row 2 twice and row 3 once, returning a data.table with three rows (two of which are identical).
+# DT and the data.table package are pre-loaded
+
+# Print the second to last row of DT using .N
+DT[.N-1]
+
+# Print the column names of DT
+names(DT)
+
+# Print the number or rows and columns of DT
+dim(DT)
+
+# Print a new data.table containing rows 2, 2, and 3 of DT
+DT[c(2,2,3)]  # DT[c(r1,r2,r3)] select multiple rows from a data.table
+################################################################# Selecting Columns in j
+DT[, .(Col1, Col2)]  #.()  is an alias to list()
+
+#Compute on columns  
+New_DT<-DT[, .(Colname=Sum(Col1_from_DT), Colname2=mean(Col2_from_DT))]
+#Throw anything into j
+DT[, plot(ColA, ColC)] # don't need .(
+
+############################## Exercise
+When you use .() in j, the result is always a data.table. For convenience, data.table also provides the option to return a vector while computing on just a single column and not wrapping it with .().
+DT[, .(B)] # have period, type==data.table  VS #DT[, B] type==vector
+
+##http://datatable.r-forge.r-project.org/datatable-faq.pdf
+D <- 5
+DT[, D] returns 5 as vector, and DT[, .(D)] returns 5 as data.table.  #.() in j always returns a data.table.
