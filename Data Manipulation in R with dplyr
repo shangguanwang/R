@@ -1,1 +1,14 @@
 #tbl-a special type of data.frame
+tbl_df(dataframe) #only display lines that will fit your window, cut rows and columns, display dims and names
+glimpse(dataframe)
+
+#### Convert data.frame to table  tbl_df()
+# Convert the hflights data.frame into a hflights tbl
+hlights<-tbl_df(hflights)
+
+# Display the hflights tbl
+hflights
+
+# Create the object carriers
+carriers<-hlights$UniqueCarrier
+####
