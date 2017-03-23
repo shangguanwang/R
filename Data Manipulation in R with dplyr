@@ -11,4 +11,23 @@ hflights
 
 # Create the object carriers
 carriers<-hlights$UniqueCarrier
-####
+#### ????????????????????????????????Changing labels of hflights, part 1 of 2
+#### df$New_col<-lut[df$old_col] ###########
+lut <- c("AA" = "American", 
+         "AS" = "Alaska", 
+         "B6" = "JetBlue")
+> lut
+        AA         AS         B6 
+"American"   "Alaska"  "JetBlue"
+# Both the dplyr and hflights packages are loaded into workspace
+lut <- c("AA" = "American", "AS" = "Alaska", "B6" = "JetBlue", "CO" = "Continental", 
+         "DL" = "Delta", "OO" = "SkyWest", "UA" = "United", "US" = "US_Airways", 
+         "WN" = "Southwest", "EV" = "Atlantic_Southeast", "F9" = "Frontier", 
+         "FL" = "AirTran", "MQ" = "American_Eagle", "XE" = "ExpressJet", "YV" = "Mesa")
+
+# Add the Carrier column to hflights
+hflights$Carrier <- lut[hflights$UniqueCarrier]
+
+# Glimpse at hflights
+glimpse(hflights)
+###########################
