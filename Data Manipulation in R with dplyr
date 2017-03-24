@@ -133,4 +133,56 @@ m2<-mutate(hflights,TotalTaxi=TaxiIn+TaxiOut,ActualGroundTime=ActualElapsedTime-
 (A) hflights <- select(hflights, -(Year:Month), -(DepTime:Diverted))
 (B) select(hflights, starts_with("D"))
 ########################  333333333  Filter and arrange
+###################Section 5 - The third of five verbs: filter
+Filter-filter rows based on content
+filter(df, logical test:col==1) #will return all the rows that pass the test
+############   Logical operators
+x %in% c(a, b, c), TRUE if x is in the vector c(a, b, c)
+#Print out all flights in hflights that traveled 3000 or more miles.
+#Print out all flights in hflights flown by JetBlue, Southwest, or Delta.
+#Extract from hflights all flights where taxiing took longer than the actual flight. 
 
+# All flights that traveled 3000 miles or more
+filter(hflights,Distance>=3000)
+
+# All flights flown by one of JetBlue, Southwest, or Delta
+filter(hflights,UniqueCarrier %in% c("JetBlue","Southwest","Delta"))
+
+# All flights where taxiing took longer than flying
+filter(hflights,TaxiIn + TaxiOut > AirTime)
+################## Combining tests using boolean operators
+& (and), | (or), and ! (not)
+
+you can also pass several logical tests to filter(), separated by commas. The following two calls are completely equivalent:
+filter(df, a > 0 & b > 0)
+filter(df, a > 0, b > 0)
+
+This example keeps the observations in df for which the variable x is not NA:
+filter(df, !is.na(x))
+
+#####################
+#Use R's logical and boolean operators to select just the rows where a flight left before 5:00 am (500) or arrived after 10:00 pm (2200).
+#Print out all of the flights that departed late but arrived ahead of schedule. Use DepDelay and ArrDelay for this.
+#Find all of the flights that were cancelled after being delayed. These are flights that were cancelled, while having a DepDelay greater than zero.
+
+# All flights that departed before 5am or arrived after 10pm
+filter(hflights, DepTime<500 | ArrTime>2200)
+
+# All flights that departed late but arrived ahead of schedule
+filter(hflights, DepDelay>0 & ArrDelay<0)
+
+# All flights that were cancelled after being delayed
+filter(hflights, Cancelled==1 &DepDelay>0)
+
+#First, use filter() to select the flights that had JFK as their destination and save this result to c1.
+#Second, add a new column named Date to c1: paste() together the Year, Month and DayofMonth variables, seperate them by a "-" by using the sep attribute of paste(). Save the resulting data frame as c2.
+#Finally, select some columns to provide an overview: Date, DepTime, ArrTime and TailNum, in this order. Do not assign the resulting database to a variable; just print it to the console.
+
+# Select the flights that had JFK as their destination: c1
+c1 <- filter(hflights, Dest == "JFK")
+
+# Combine the Year, Month and DayofMonth variables to create a Date column: c2
+c2 <- mutate(c1, Date = paste(Year, Month, DayofMonth, sep = "-"))
+
+# Print out a selection of columns of c2
+select(c2, Date, DepTime, ArrTime, TailNum)
