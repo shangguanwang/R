@@ -308,5 +308,45 @@ aa <- filter(hflights, UniqueCarrier == "American")
 
 # Generate summarizing statistics for aa 
 summarize(aa,n_flights=n(),n_canc= sum(Cancelled == 1), avg_delay = mean(ArrDelay, na.rm = TRUE))
-##########################---------------------------------------
+#---------------------------------------Section 8 - Chaining your functions: the pipe operator= then
+# %>% magrittr package, don't need to load the package
+object-pipe-function =function(object)
+object %>% function(object, argu2,argu3)
+#########################
+mean(c(1, 2, 3, NA), na.rm = TRUE)
+equivalent: c(1, 2, 3, NA) %>% mean(na.rm = TRUE)
 
+Use dplyr functions and the pipe operator to transform the following English sentences into R code:
+
+Take the hflights data set and then ...
+Add a variable named diff that is the result of subtracting TaxiIn from TaxiOut, and then ...
+Pick all of the rows whose diff value does not equal NA, and then ...
+Summarise the data set with a value named avg that is the mean diff value.
+
+# Write the 'piped' version of the English sentences.
+hflights %>% mutate(diff=TaxiOut-TaxiIn) %>% filter(is.na(diff)==FALSE) %>% summarise(avg=mean(diff))
+###################################
+mutate() the hflights dataset and add two variables:
+RealTime: the actual elapsed time plus 100 minutes (for the overhead that flying involves) and
+mph: calculated as Distance / RealTime * 60, then
+filter() to keep observations that have an mph that is not NA and below 70, finally
+summarise() the result by creating four summary variables:
+n_less, the number of observations,
+n_dest, the number of destinations,
+min_dist, the minimum distance and
+max_dist, the maximum distance.
+
+# Chain together mutate(), filter() and summarise()
+hflights %>%
+mutate(RealTime=ActualElapsedTime+100,mph=Distance / RealTime * 60) %>% 
+filter(is.na(mph)==FALSE & mph<70) %>% 
+summarise(n_less=n(),n_dest=n_distinct(Dest),min_dist=min(Distance),max_dist=max(Distance))
+#######################################Advanced piping exercise: How many flights where overnight flights?
+filter() the hflights tbl to keep only observations whose DepTime is not NA, whose ArrTime is not NA and for which DepTime exceeds ArrTime.
+Pipe the result into a summarise() call to create a single summary variable: num, that simply counts the number of observations.
+# Count the number of overnight flights
+ hflights%>%
+ mutate(overnight = (ArrTime < DepTime)) %>%   #by mutate, don't need is.na(col)==FALSE twice
+filter(overnight == TRUE) %>%   
+  summarise(num = n())
+ #--------------------------------------- Section 9 - Get group-wise insights: group_by
