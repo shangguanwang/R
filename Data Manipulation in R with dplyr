@@ -186,3 +186,11 @@ c2 <- mutate(c1, Date = paste(Year, Month, DayofMonth, sep = "-"))
 
 # Print out a selection of columns of c2
 select(c2, Date, DepTime, ArrTime, TailNum)
+
+#########
+How many weekend flights flew a distance of more than 1000 miles but had a total taxiing time below 15 minutes?
+filter(hflights, DayOfWeek %in% c(6,7), Distance > 1000, TaxiIn + TaxiOut < 15)
+
+############################Section 6 - Almost there: the arrange verb
+arrange(df,Col_name) row based on content, arranged by col
+
