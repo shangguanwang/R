@@ -1,3 +1,5 @@
+#https://github.com/anirudhjayaraman/dplyr-data-manipulation/blob/master/dplyrTutorial
+
 #tbl-a special type of data.frame
 tbl_df(dataframe) #only display lines that will fit your window, cut rows and columns, display dims and names
 glimpse(dataframe)
@@ -193,4 +195,38 @@ filter(hflights, DayOfWeek %in% c(6,7), Distance > 1000, TaxiIn + TaxiOut < 15)
 
 ############################Section 6 - Almost there: the arrange verb
 arrange(df,Col_name) row based on content, arranged by col
+a1<-select(df,variable1,contains("V2name")
+arrange(a1,Col_arranged_by, if_Col_same_Arrange_By_Col2)
+############## Exercise1 Arranging your data
+arrange() can be used to rearrange rows according to any type of data. If you pass arrange() a character variable, for example, R will rearrange the rows in alphabetical order according to values of the variable. If you pass a factor variable, R will rearrange the rows according to the order of the levels in your factor (running levels() on the variable reveals this order).
+#Arrange dtc, by departure delays so that the shortest departure delay is at the top of the data set.
+#Arrange dtc so that flights that were cancelled for the same reason appear next to each other.
+#Arrange dtc so that flights by the same carrier appear next to each other. Within each carrier, flights that have smaller departure delays appear before flights that have higher departure delays. Do this in a one-liner.
 
+# Definition of dtc
+dtc <- filter(hflights, Cancelled == 1, !is.na(DepDelay))
+
+# Arrange dtc by departure delays
+arrange(dtc,DepDelay)
+
+# Arrange dtc so that cancellation reasons are grouped
+arrange(dtc,CancellationCode)
+
+# Arrange dtc according to carrier and departure delays
+arrange(dtc,UniqueCarrier,DepDelay)
+
+########################################  Reverse the order of arranging
+#By default, arrange() arranges the rows from smallest to largest. Rows with the smallest value of the variable will appear at the top of the data set. You can reverse this behavior with the desc() function. arrange() will reorder the rows from largest to smallest values of a variable if you wrap the variable name in desc() before passing it to arrange()
+#Arrange hflights so that flights by the same carrier appear next to each other and within each carrier, flights that have larger departure delays appear before flights that have smaller departure delays.
+#Arrange the flights in hflights by their total delay (the sum of DepDelay and ArrDelay). Try to do this directly inside arrange().
+
+# Arrange according to carrier and decreasing departure delays
+arrange(hflights,UniqueCarrier,desc(DepDelay))
+
+# Arrange flights by total delay (normal order).
+arrange(hflights,DepDelay+ArrDelay)
+#????????   What steps do you take to print a only the TailNum of hflights, only for flights that departed too late, sorted by total taxiing time?
+filter(), then mutate(), arrange() and finally select().
+# First select a threshold for departure delay by finding max DepDelay
+max(filter(select(hflights, DepDelay), !is.na(DepDelay)))
+select(arrange(filter(hflights, DepDelay > 360), TaxiIn + TaxiOut), TailNum)
