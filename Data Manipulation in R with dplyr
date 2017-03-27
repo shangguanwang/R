@@ -350,3 +350,20 @@ Pipe the result into a summarise() call to create a single summary variable: num
 filter(overnight == TRUE) %>%   
   summarise(num = n())
  #--------------------------------------- Section 9 - Get group-wise insights: group_by
+compare row-group differences
+group_by(df, Col_to_group)
+
+Use group_by() to group hflights by UniqueCarrier.
+summarise() the grouped tbl with two summary variables:
+p_canc, the percentage of cancelled flights
+avg_delay, the average arrival delay of flights whose delay does not equal NA.
+Finally, order the carriers in the summary from low to high by their average arrival delay. Use percentage of flights cancelled to break any ties.
+
+# Make an ordered per-carrier summary of hflights
+hflights %>%
+  group_by(UniqueCarrier) %>%
+  summarise(p_canc =mean(Cancelled == 1) * 100,
+            avg_delay= mean(ArrDelay, na.rm=TRUE)) %>%
+  arrange(avg_delay, p_canc)
+  #############################################
+  
