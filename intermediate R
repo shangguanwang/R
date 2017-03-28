@@ -1,0 +1,14 @@
+#alphabet 后面的字母>前面的。大写>小写
+#can compare each element of a vector(matrix) to one number or compare two vectors
+
+# The social data has been created for you
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+facebook <- c(17, 7, 5, 16, 8, 13, 14)
+views <- matrix(c(linkedin, facebook), nrow = 2, byrow = TRUE) ####
+
+if (condition) {expr1} else if (condition) {expr2} else{expr3}
+while (condition) {expr} if (condition) {break}
+
+# Code the while loop  不需要逗号，是<-
+while (speed>30 ) {print("Slow down!")   
+speed<-speed-7}
