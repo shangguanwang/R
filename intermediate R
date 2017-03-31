@@ -12,3 +12,49 @@ while (condition) {expr} if (condition) {break}
 # Code the while loop  不需要逗号，是<-
 while (speed>30 ) {print("Slow down!")   
 speed<-speed-7}
+-----------------------------------paste() -glue together
+## When passing a single vector, paste work like as.character.
+paste(1:12)        # same
+as.character(1:12) # same
+> paste("A", 1, "%")       #A bunch of individual character strings.
+[1] "A 1 %"
+> paste(1:4, letters[1:4]) #2 or more vectors pasted element for element.
+[1] "1 a" "2 b" "3 c" "4 d"
+> paste(1:10, collapse="") #One vector smushed together.
+[1] "12345678910"
+
+a <- c("a","b","c")
+b <- c("y","w","q")
+paste(a,b,sep = "_")
+**output**
+"a_y" "b_w" "c_q"
+---------------------------------Throw In More Conditions
+# Initialize the speed variable
+speed <- 64
+# Extend/adapt the while loop
+while (speed > 30) {
+  print(paste("Your speed is",speed))
+  
+  # Break the while loop when speed exceeds 80
+  if (speed>80 ) {break }
+  
+  if (speed>48 ) {print("Slow down big time!")
+  speed<-speed-11
+  
+  } else {print("Slow down!") 
+  speed<-speed-6 }}
+  -------------------------------- divisible %%
+  # Code the while loop
+while (i <= 10) {
+  print(3*i)
+  if ( 3*i %%8==0) {break
+    
+  }
+  i <- i + 1
+}
+############################## for (x_variable in vector/list_sequence) {expression}
+-----------next() skip a loop, go to the next loop in the for loop
+## **** need double square brackets - [[ ]] - to select the list elements
+
+
+
