@@ -102,3 +102,6 @@ input goes to blackbox to output
 sd (x=,na.rm=TRUE) 
 help(sd) / ?sd
 
+my_fun <- function(arg1, arg2 = val2) {
+  body
+}
