@@ -105,3 +105,29 @@ help(sd) / ?sd
 my_fun <- function(arg1, arg2 = val2) {
   body
 }
+############################## write your own function 3
+# Finish the pow_two() function
+pow_two <- function(x, print_info=TRUE) {
+  y <- x ^ 2
+  if (print_info==TRUE) {print(paste(x, "to the power two equals", y))}
+  return(y)
+}
+#################
+ #function scoping: It implies that variables that are defined inside a function are not accessible outside that function.
+ # sample(1:6,size=1) #$$$$ randomly reorders the elements, size==pick 1 element
+ 
+ two_dice <- function() {
+  possibilities <- 1:6
+  dice1 <- sample(possibilities, size = 1)
+  dice2 <- sample(possibilities, size = 1)
+  dice1 + dice2
+}
+#R passes arguments by value and not by reference, the value of count is not changed after the first two calls of increment(). 
+#Only in the final expression, where count is re-assigned explicitly, does the value of count change.
+
+search()
+require() # library if package not installed 
+# check out the currently attached packages 
+######################
+
+ 
