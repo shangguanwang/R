@@ -129,5 +129,44 @@ search()
 require() # library if package not installed 
 # check out the currently attached packages 
 ######################
+-------------------------------  Lapply always return a list unlist(lapply(data,function,arguments)) ------
+ lapply(datalist,class) #apply function class to the data
+## 
+num_chars<-c()
+for (i in 1:length(cities)) {num_chars[i]<-nchar(cities[i])
+}
+##
+unlist(lapply(datavector, nchar)) #return a vector of each element's length of dataset
+########################
+# The vector pioneers has already been created for you
+pioneers <- c("GAUSS:1777", "BAYES:1702", "PASCAL:1623", "PEARSON:1857")
 
- 
+# Split names from birth year
+split_math <- strsplit(pioneers, split = ":")
+
+# Convert to lowercase strings: split_low
+split_low<-lapply(split_math, tolower)
+-----------------------lapply and anonymous functions只需要用一次无需assign function name ------------------------
+# Named function
+triple <- function(x) { 3 * x }
+
+# Anonymous function with same implementation
+function(x) { 3 * x }
+
+# Use anonymous function inside lapply()
+lapply(list(1,2,3), function(x) { 3 * x })
+##########################
+# Definition of split_low
+pioneers <- c("GAUSS:1777", "BAYES:1702", "PASCAL:1623", "PEARSON:1857")
+split <- strsplit(pioneers, split = ":")
+split_low <- lapply(split, tolower)
+
+# Transform: use anonymous function inside lapply
+
+names <- lapply(split_low, function(x){x[1]})
+
+# Transform: use anonymous function inside lapply
+
+years <- lapply(split_low, function(x){x[2]})
+#########################lapply() always returns a list, no matter the input
+------------------------- sapply--------------------------
