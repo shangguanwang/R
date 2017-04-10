@@ -130,6 +130,7 @@ require() # library if package not installed
 # check out the currently attached packages 
 ######################
 -------------------------------  Lapply always return a list unlist(lapply(data,function,arguments)) ------
+-------------------------------avoid for loop, apply function to every element of a list or vector---------
  lapply(datalist,class) #apply function class to the data
 ## 
 num_chars<-c()
@@ -169,4 +170,66 @@ names <- lapply(split_low, function(x){x[1]})
 
 years <- lapply(split_low, function(x){x[2]})
 #########################lapply() always returns a list, no matter the input
-------------------------- sapply--------------------------
+------------------------- sapply-------------------------- result clear, unlike lapply return lists anyway
+sapply(datacity, nchar,USE.NAMES=FALSE) #simplify result of lapply, convert result to a one-dimentional array=vector
+#NAMES=FALSE, don't contain name
+--------sapply can't simplify, now what?
+#sapply can be dangerous due to simplification
+#function below_zero() takes a vector of numerical values and returns a vector that only contains the values that are strictly below zero.
+#Given that the length of the output of below_zero() changes for different input vectors, sapply() is not able to nicely convert the output of lapply() to a nicely formatted matrix. 
+#Instead, the output values of sapply() and lapply() are exactly the same, as shown by the TRUE output of identical().
+
+# Definition of below_zero()
+below_zero <- function(x) {
+  return(x[x < 0])
+}
+
+# Apply below_zero over temp using sapply(): freezing_s
+freezing_s<-sapply(temp,below_zero)
+
+# Apply below_zero over temp using lapply(): freezing_l
+freezing_l<-lapply(temp,below_zero)
+
+# Are freezing_s and freezing_l identical?
+identical(freezing_s,freezing_l)
+################################
+#sapply() does not simplify the list of NULL's. That's because the 'vector-version' of a list of NULL's would simply be a NULL, which is no longer a vector with the same length as the input. 
+#cat(x) #like print
+cat("Miaow")
+>Miaow
+cat(LETTERS)
+
+# Definition of print_info()
+print_info <- function(x) {
+  cat("The average temperature is", mean(x), "\n")
+}
+
+# Apply print_info() over temp using sapply()
+sapply(temp,print_info)
+
+# Apply print_info() over temp using lapply()
+lapply(temp,print_info)
+------------------------------ vapply () need to specify type_output(3), a more robust version of sapply() -------------------
+numeric(1) #numeric vector of length 1
+character(2) #character vector of length 2
+
+########### use vapply ############
+vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
+#The FUN.VALUE argument expects a template for the return argument of this function FUN
+
+# Definition of basics() takes a vector, and returns a named vector of length three
+basics <- function(x) {
+  c(min = min(x), mean = mean(x), max = max(x))
+}
+
+# Apply basics() over temp using vapply()
+vapply(temp,basics,numeric(3))
+###################################From sapply to vapply# Convert to vapply() expression
+robust（稳健性）包括两种含义：效度的稳健性（robustness of validity）简单理解是数据微小的波动，不会对估计量造成剧烈的影响、效率的稳健性（robustness of efficiency）
+
+vapply(temp, max, numeric(1))
+
+# Convert to vapply() expression
+vapply(temp, function(x, y) { mean(x) > y }, y = 5,logical(1))
+#############################
+------------------------------------Utilities----------------------------------------
