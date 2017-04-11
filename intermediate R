@@ -301,4 +301,152 @@ grepl(pattern="@.*\\.edu$",x=emails) #.* any character any length
 --------------------------------------------
 sub(".*\\s([0-9]+)\\snomination.*$", "\\1", awards)
 #The ([0-9]+) selects the entire number that comes before the word “nomination” in the string, and the entire match gets replaced by this number because of the \\1 that reference to the content inside the parentheses
+-------------------------------------------------  Times and Dates---------------------------------------------------------------------
+Sys.Date() #CAPITALIZE #ask today, class is Date, a special type of object
+Sys.time()
 
+as.Date("string") #convert character-string to a date-object
+as.POSIXct("string") 
+default format "%Y-%m-%d"
+%Y=4-digit year
+%m=2-digit month
+%d=2-digit day
+
+my_date<-as.Date("1960-30-01", format="%Y-%d-%m")
+my_date+1
+
+unclass(date_object) # xxx days from that day
+unclass(my_time)
+
+#lubridate, zoo, xts packages
+--------------------------- Create and format dates
+To create a Date object from a simple character string in R, you can use the as.Date() function. The character string has to obey a format that can be defined using a set of symbols (the examples correspond to 13 January, 1982):
+
+%Y: 4-digit year (1982)
+%y: 2-digit year (82)
+%m: 2-digit month (01)
+%d: 2-digit day of the month (13)
+%A: weekday (Wednesday)
+%a: abbreviated weekday (Wed)
+%B: month (January)
+%b: abbreviated month (Jan)
+The following R commands will all create the same Date object for 13 January, 1982:
+
+as.Date("1982-01-13")
+as.Date("Jan-13-82", format = "%b-%d-%y")
+as.Date("13 January, 1982", format = "%d %B, %Y")
+Notice that the first line here did not need a format argument, because by default R matches your character string to the formats "%Y-%m-%d" or "%Y/%m/%d".
+
+In addition to creating dates, you can also convert dates to character strings that use a different date notation. For this, you use the format() function. 
+Try the following lines of code:
+today <- Sys.Date()
+format(Sys.Date(), format = "%d %B, %Y")
+format(Sys.Date(), format = "Today is a %A!")
+---------------------------------------
+instruction: 
+In the editor on the right, three character strings representing dates have been created. Convert them to dates using as.Date(), and assign them to date1, date2, and date3 respectively. The code for date1 is already included.
+Extract useful information from the dates as character strings using format(). From the first date, select the weekday. From the second date, select the day of the month. From the third date, you should select the abbreviated month and the 4-digit year, separated by a space.
+
+# Definition of character strings representing dates
+str1 <- "May 23, '96"
+str2 <- "2012-03-15"
+str3 <- "30/January/2006"
+
+# Convert the strings to dates: date1, date2, date3
+date1 <- as.Date(str1, format = "%b %d, '%y")
+date2<-as.Date(str2, format="%Y-%m-%d")
+date3<-as.Date(str3, format="%d/%B/%Y")
+
+# Convert dates to formatted strings
+format(date1, "%A")
+format(date2,"%d")
+format(date3,"%b %Y")
+------------------------Create and format times------------
+use as.POSIXct() to convert from a character string to a POSIXct object, and format() to convert from a POSIXct object to a character string. Again, you have a wide variety of symbols:
+
+%H: hours as a decimal number (00-23)
+%I: hours as a decimal number (01-12)
+%M: minutes as a decimal number
+%S: seconds as a decimal number
+%T: shorthand notation for the typical format %H:%M:%S
+%p: AM/PM indicator
+For a full list of conversion symbols, consult the strptime documentation in the console:
+
+?strptime
+Again,as.POSIXct() uses a default format to match character strings. In this case, it's %Y-%m-%d %H:%M:%S
+################## instructions ###############
+Convert two strings that represent timestamps, str1 and str2, to POSIXct objects called time1 and time2.
+Using format(), create a string from time1 containing only the minutes.
+From time2, extract the hours and minutes as "hours:minutes AM/PM". Refer to the assignment text above to find the correct conversion symbols!
+
+# Definition of character strings representing times
+str1 <- "May 23, '96 hours:23 minutes:01 seconds:45"
+str2 <- "2012-3-12 14:23:08"
+
+# Convert the strings to POSIXct objects: time1, time2
+time1 <- as.POSIXct(str1, format = "%B %d, '%y hours:%H minutes:%M seconds:%S")
+time2<-as.POSIXct(str2, format="%Y-%m-%d %T")
+
+# Convert times to formatted strings
+format(time1,"%M")
+format(time2, "%I:%M %p")
+####################################### Calculations with Dates
+today <- Sys.Date()
+today + 1
+today - 1
+
+as.Date("2015-03-12") - as.Date("2015-02-27")
+############## instructions
+#Calculate the number of days that passed between the last and the first day you ate pizza. Print the result.
+#Use the function diff() on pizza to calculate the differences between consecutive pizza days. Store the result in a new variable day_diff.
+#Calculate the average period between two consecutive pizza days. Print the result.
+
+>day5
+[1] "2017-04-11"
+# Difference between last and first pizza day
+print(day5-day1)
+
+# Create vector pizza
+pizza <- c(day1, day2, day3, day4, day5)
+
+# Create differences between consecutive pizza days: day_diff
+day_diff<-diff(pizza)
+
+# Average period between two consecutive pizza days
+mean(day_diff)
+########################### calculations with Times #######
+now <- Sys.time()
+now + 3600        # add an hour
+now - 3600*24     # subtract a day
+Adding or substracting time objects is also straightforward:
+
+birth <- as.POSIXct("1879-03-14 14:37:23")
+death <- as.POSIXct("1955-04-18 03:47:12")
+einstein <- death - birth
+einstein
+
+#######instructions
+# Calculate the difference between login and logout: time_online
+time_online<-logout-login
+
+# Inspect the variable time_online
+print(time_online)
+
+# Calculate the total time online
+sum(time_online)
+
+# Calculate the average time online
+mean(time_online)
+#############################Time is of the essence
+Use as.Date() to convert the astro vector to a vector containing Date objects. You will need the %d, %b and %Y symbols to specify the format. Store the resulting vector as astro_dates.
+Use as.Date() to convert the meteo vector to a vector with Date objects. This time, you will need the %B, %d and %y symbols for the format argument. Store the resulting vector as meteo_dates.
+With a combination of max(), abs() and -, calculate the maximum absolute difference between the astronomical and the meteorological beginnings of a season, i.e. astro_dates and meteo_dates. Simply print this maximum difference to the console output.
+
+# Convert astro to vector of Date objects: astro_dates
+astro_dates<-as.Date(astro, format="%d-%b-%Y")
+
+# Convert meteo to vector of Date objects: meteo_dates
+meteo_dates<-as.Date(meteo, format="%B %d, %y")
+
+# Calculate the maximum absolute difference between astro_dates and meteo_dates
+max(abs(astro_dates-meteo_dates))
