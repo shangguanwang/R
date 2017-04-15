@@ -1,3 +1,11 @@
+#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   Manipulation ############################################
+CREATE TABLE creates a new table.
+INSERT INTO adds a new row to a table.
+SELECT queries data from a table.
+UPDATE edits a row in a table.
+ALTER TABLE changes an existing table. #ADD COLUMN
+DELETE FROM deletes rows from a table.
+-------------------------------------------------------Summary----------
 SELECT colnames FROM tablename;
 SELECT * FROM tablename;
 CREATE TABLE name(colname1 TYPE, colname2 TYPE, colname3 TYPE);
@@ -62,5 +70,6 @@ WHERE id = 4;
 DELETE FROM celebs WHERE twitter_handle IS NULL; #####****
 
 SELECT * FROM celebs;
-----------------------------------
+---------------------------------- $$$$$$$$$$$$$$$$$$$$$$$$$ Query $$$$$$$$$$$$$$$$$$$$$$$$$----------------------------
+
 
