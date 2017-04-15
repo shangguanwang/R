@@ -14,7 +14,7 @@ SELECT * FROM tablename ORDER BY colname DESC LIMIT 7; # descending order from h
 SELECT SUM(colname) FROM tablename
 SELECT MAX(colname) FROM tablename
 SELECT ROUND(AVG(colname),3) FROM tablename #round average to 3 decimal places
-CREATE TABLE name(colname1 TYPE, colname2 TYPE, colname3 TYPE);
+CREATE TABLE name(colname1 TYPE PRIMARY KEY, colname2 TYPE, colname3 TYPE);
 INSERT INTO tablename(col1,col2,col3) VALUES (val1, val2, val3);
 
 UPDATE tablename
@@ -189,3 +189,67 @@ SELECT price,ROUND(AVG(downloads)) FROM fake_apps
 GROUP BY price;
 
 ---------------------------------- $$$$$$$$$$$$$$$$$$$$$$$$$ Multiple Tables $$$$$$$$$$$$$$$$$$$$$$$$$----------------------------
+#Summary:
+Primary Key is a column that serves a unique identifier for row in the table. Values in this column must be unique and cannot be NULL.
+Foreign Key is a column that contains the primary key to another table in the database. It is used to identify a particular row in the referenced table.
+Joins are used in SQL to combine data from multiple tables.
+INNER JOIN will combine rows from different tables if the join condition is true.
+LEFT OUTER JOIN will return every row in the left table, and if the join condition is not met, NULL values are used to fill in the columns from the right table.
+AS is a keyword in SQL that allows you to rename a column or table in the result set using an alias.
+#By specifying that the id column is the PRIMARY KEY, SQL makes sure that:
+#None of the values in this column are NULL
+#Each value in this column is unique
+----------------------------------------------------------------------------------------------------------------------------------------
+#A table can not have more than one PRIMARY KEY column.
+
+CREATE TABLE artists(id INTEGER PRIMARY KEY, name TEXT);
+----------------------------------
+SELECT * FROM albums;
+SELECT * FROM artists;
+----------------------------------
+SELECT * FROM artists WHERE id=3;
+SELECT * FROM albums WHERE artist_id LIKE 3; #LIKE 3 is the same as =3
+
+#A foreign key is a column that contains the primary key of another table in the database. We use foreign keys and primary keys to connect rows in two different tables. 
+#One table's foreign key holds the value of another table's primary key. Unlike primary keys, foreign keys do not need to be unique and can be NULL.
+----------------------------------cross (table) join: table_name.column_name
+SELECT albums.name,albums.year,artists.name FROM albums,artists;
+
+#Unfortunately the result of this cross join is not very useful. It combines every row of the artists table with every row of the albums table. It would be more useful to only combine the rows where the album was created by the artist.
+---------------------------------- inner join
+SELECT *
+FROM 
+  albums
+JOIN artists ON
+  albums.artist_id=artists.id;
+  
+1. SELECT * specifies the columns our result set will have. Here, we want to include every column in both tables.
+2. FROM albums specifies the first table we are querying.
+3. JOIN artists ON specifies the type of join we are going to use as well as the name of the second table. Here, we want to do an inner join and the second table we want to query is artists.
+4. albums.artist_id = artists.id is the join condition that describes how the two tables are related to each other. Here, SQL uses the foreign key column artist_id in the albums table to match it with exactly one row in the artists table with the same value in the id column. 
+   We know it will only match one row in the artists table because id is the PRIMARY KEY of artists.
+----------------------------------LEFT JOIN
+SELECT * 
+FROM albums
+LEFT JOIN artists ON
+albums.artist_id=artists.id;
+
+#Outer joins also combine rows from two or more tables, but unlike inner joins, they do not require the join condition to be met. 
+Instead, every row in the left table is returned in the result set, and if the join condition is not met, then NULL values are used to fill in the columns from the right table.
+#The left table is simply the first table that appears in the statement. Here, the left table is albums. Likewise, the right table is the second table that appears. Here, artists is the right table.
+---------------------------------- AS 'newname'
+#rename a column or table using an alias
+
+SELECT
+  albums.name AS 'Album',
+  albums.year,
+  artists.name AS 'Artist'
+FROM
+  albums
+JOIN artists ON
+  albums.artist_id = artists.id
+WHERE
+  albums.year > 1980;
+
+#Here we want to rename the albums.name column as 'Album', and the artists.name column as 'Artist'.
+#It is important to note that the columns have not been renamed in either table. The aliases only appear in the result set.
