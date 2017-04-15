@@ -9,6 +9,8 @@ DELETE FROM deletes rows from a table.
 SELECT col1,col2 FROM tablename;
 SELECT DISTINCT col FROM table;
 SELECT * FROM tablename WHERE col LIKE 'na_e';
+SELECT * FROM tablename WHERE col BETWEEN xx AND yy;
+SELECT * FROM tablename ORDER BY colname DESC LIMIT 7; # descending order from high to low # ascending order. ASC # only want 7 entries
 CREATE TABLE name(colname1 TYPE, colname2 TYPE, colname3 TYPE);
 INSERT INTO tablename(col1,col2,col3) VALUES (val1, val2, val3);
 
@@ -72,6 +74,14 @@ DELETE FROM celebs WHERE twitter_handle IS NULL; #####****
 
 SELECT * FROM celebs;
 ---------------------------------- $$$$$$$$$$$$$$$$$$$$$$$$$ Query $$$$$$$$$$$$$$$$$$$$$$$$$----------------------------
+Summary:
+SELECT is the clause you use every time you want to query information from a database.
+WHERE is a popular command that lets you filter the results of the query based on conditions that you specify.
+LIKE and BETWEEN are special operators that can be used in a WHERE clause
+AND and OR are special operators that you can use with WHERE to filter the query on two or more conditions.
+ORDER BY lets you sort the results of the query in either ascending or descending order.
+LIMIT lets you specify the maximum number of rows that the query will return. This is especially important in large tables that have thousands or even millions of rows.
+------------------------------------------------------------------------------------
 SELECT DISTINCT col FROM tablename
 #returns unique values in the specified column(s)
 SELECT DISTINCT genre FROM movies;
@@ -97,5 +107,26 @@ WHERE name LIKE 'a%';   # a% begin with the letter "A" #%a end with "a"
 #any movie that contains the word "man" in its name will be returned in the result set. Notice, that LIKE is not case sensitive. "Batman" and "Man Of Steel" both appear in the result set.
 SELECT * FROM movies
 WHERE name LIKE '%man%';  
+--------------------------------- BETWEEN
+#The BETWEEN operator is used to filter the result set within a certain range. The values can be numbers, text or dates.
+#only include movies with names that begin with letters "A" [up to but not including "J".]
+SELECT * FROM movies 
+WHERE name BETWEEN 'A' AND 'J';
 
+# only include movies with years between 1990 up to and including 2000.
+WHERE year BETWEEN 1990 AND 2000;
+
+SELECT * FROM movies 
+WHERE year BETWEEN 1990 AND 2000
+AND genre='comedy';
+
+SELECT * FROM movies
+ORDER BY imdb_rating DESC;
+
+# specify the maximum number of rows the result set will have. 
+SELECT * FROM movies
+ORDER BY imdb_rating ASC
+LIMIT 3;  
+
+---------------------------------- $$$$$$$$$$$$$$$$$$$$$$$$$ Aggregate Functions $$$$$$$$$$$$$$$$$$$$$$$$$----------------------------
 
