@@ -6,8 +6,9 @@ UPDATE edits a row in a table.
 ALTER TABLE changes an existing table. #ADD COLUMN
 DELETE FROM deletes rows from a table.
 -------------------------------------------------------Summary----------
-SELECT colnames FROM tablename;
-SELECT * FROM tablename;
+SELECT col1,col2 FROM tablename;
+SELECT DISTINCT col FROM table;
+SELECT * FROM tablename WHERE condition;
 CREATE TABLE name(colname1 TYPE, colname2 TYPE, colname3 TYPE);
 INSERT INTO tablename(col1,col2,col3) VALUES (val1, val2, val3);
 
@@ -71,5 +72,9 @@ DELETE FROM celebs WHERE twitter_handle IS NULL; #####****
 
 SELECT * FROM celebs;
 ---------------------------------- $$$$$$$$$$$$$$$$$$$$$$$$$ Query $$$$$$$$$$$$$$$$$$$$$$$$$----------------------------
-
-
+SELECT DISTINCT col FROM tablename
+#returns unique values in the specified column(s)
+SELECT DISTINCT genre FROM movies;
+---------------------------------
+SELECT * FROM movies WHERE imdb_rating >8;
+---------------------------------
