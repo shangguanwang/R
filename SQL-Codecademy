@@ -11,6 +11,9 @@ SELECT DISTINCT col FROM table;
 SELECT * FROM tablename WHERE col LIKE 'na_e';
 SELECT * FROM tablename WHERE col BETWEEN xx AND yy;
 SELECT * FROM tablename ORDER BY colname DESC LIMIT 7; # descending order from high to low # ascending order. ASC # only want 7 entries
+SELECT SUM(colname) FROM tablename
+SELECT MAX(colname) FROM tablename
+SELECT ROUND(AVG(colname),3) FROM tablename #round average to 3 decimal places
 CREATE TABLE name(colname1 TYPE, colname2 TYPE, colname3 TYPE);
 INSERT INTO tablename(col1,col2,col3) VALUES (val1, val2, val3);
 
@@ -129,4 +132,60 @@ ORDER BY imdb_rating ASC
 LIMIT 3;  
 
 ---------------------------------- $$$$$$$$$$$$$$$$$$$$$$$$$ Aggregate Functions $$$$$$$$$$$$$$$$$$$$$$$$$----------------------------
+###Summary:
+Aggregate functions combine multiple rows together to form a single value of more meaningful information.
+COUNT takes the name of a column(s) as an argument and counts the number of rows where the value(s) is not NULL.
+GROUP BY is a clause used with aggregate functions to combine data from one or more columns.
+SUM() takes the column name as an argument and returns the sum of all the values in that column.
+MAX() takes the column name as an argument and returns the largest value in that column.
+MIN() takes the column name as an argument and returns the smallest value in that column.
+AVG() takes a column name as an argument and returns the average value for that column.
+ROUND() takes two arguments, a column name and the number of decimal places to round the values in that column.
+------------------------------------------------------------------------
 
+#Count how many apps are in the database. In the code editor replace the previous statement with
+SELECT COUNT(*) FROM fake_apps;
+---------------------------------
+#Count(colname) counts the number of rows where the column is not NULL.
+# return the total number of free apps in the table
+SELECT COUNT (*) FROM fake_apps
+WHERE price=0;
+---------------------------------Count the number of apps at each price. Get two cols: price & count
+#GROUP BY is a clause in SQL that is only used with aggregate functions. It is used in collaboration with the SELECT statement to arrange identical data into groups.
+#Here, our aggregate function is COUNT() and we are passing price as an argument to GROUP BY. SQL will count the total number of apps for each price in the table.
+#It is usually helpful to SELECT the column you pass as an argument to GROUP BY. Here we select price and COUNT(*). You can see that the result set is organized into two columns making it easy to see the number of apps at each price.
+
+SELECT price,COUNT(*) FROM fake_apps 
+GROUP BY price;
+
+SELECT price, COUNT(*) FROM fake_apps
+WHERE downloads>20000
+GROUP BY price;
+---------------------------------total number of downloads for all of the apps combined
+SELECT SUM(downloads) FROM fake_apps;
+---------------------------------Calculate the total number of downloads for each category
+SELECT category, SUM(downloads) FROM fake_apps
+GROUP BY category;
+---------------------------------How many downloads does the most/least popular app have
+SELECT MAX(downloads) FROM fake_apps;
+SELECT MIN(downloads) FROM fake_apps;
+---------------------------------Return the names of the most/least downloaded apps in each category. 
+#Three cols: name, category, max(downloads)
+SELECT name, category, MAX(downloads) FROM fake_apps
+GROUP BY category;
+
+SELECT name,category,MIN(downloads) FROM fake_apps
+GROUP BY category;
+--------------------------------- average number of downloads 
+SELECT AVG(downloads) FROM fake_apps;
+---------------------------------Calculate the average number of downloads at each price. 
+SELECT price,AVG(downloads) FROM fake_apps
+GROUP BY price;
+####################rounding the average number of downloads to two decimal places for each price. 
+SELECT price,ROUND(AVG(downloads),2) FROM fake_apps
+GROUP BY price;
+#################### round to the nearest integer
+SELECT price,ROUND(AVG(downloads)) FROM fake_apps
+GROUP BY price;
+
+---------------------------------- $$$$$$$$$$$$$$$$$$$$$$$$$ Multiple Tables $$$$$$$$$$$$$$$$$$$$$$$$$----------------------------
