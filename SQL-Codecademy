@@ -8,7 +8,7 @@ DELETE FROM deletes rows from a table.
 -------------------------------------------------------Summary----------
 SELECT col1,col2 FROM tablename;
 SELECT DISTINCT col FROM table;
-SELECT * FROM tablename WHERE condition;
+SELECT * FROM tablename WHERE col LIKE 'na_e';
 CREATE TABLE name(colname1 TYPE, colname2 TYPE, colname3 TYPE);
 INSERT INTO tablename(col1,col2,col3) VALUES (val1, val2, val3);
 
@@ -77,4 +77,25 @@ SELECT DISTINCT col FROM tablename
 SELECT DISTINCT genre FROM movies;
 ---------------------------------
 SELECT * FROM movies WHERE imdb_rating >8;
+
+#Common operators used with the WHERE clause are:
+= equals
+!= not equals
+> greater than
+< less than
+>= greater than or equal to
+<= less than or equal to
 ---------------------------------
+#LIKE is a special operator that can be used in a WHERE clause
+#Se_en represents a pattern with a wildcard character. The _ means you can substitute any individual character here without breaking the pattern. The names Seven and Se7en both match this pattern.
+SELECT * FROM movies
+WHERE name LIKE 'Se_en';  #pick row with name=='Se_en'  # _ means any character
+
+SELECT * FROM movies
+WHERE name LIKE 'a%';   # a% begin with the letter "A" #%a end with "a"
+
+#any movie that contains the word "man" in its name will be returned in the result set. Notice, that LIKE is not case sensitive. "Batman" and "Man Of Steel" both appear in the result set.
+SELECT * FROM movies
+WHERE name LIKE '%man%';  
+
+
