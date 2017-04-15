@@ -1,0 +1,66 @@
+SELECT colnames FROM tablename;
+SELECT * FROM tablename;
+CREATE TABLE name(colname1 TYPE, colname2 TYPE, colname3 TYPE);
+INSERT INTO tablename(col1,col2,col3) VALUES (val1, val2, val3);
+
+UPDATE tablename
+SET col3=val3
+WHERE col1=val1;
+
+ALTER tablename ADD COLUMN colname TYPE;
+
+DELETE FROM tablename WHERE colname IS NULL;
+
+------------------------------------------------------------------------
+#'Structured Query Language', is a programming language designed to manage data stored in relational databases.
+#All commands: https://www.codecademy.com/articles/sql-commands?r=master
+#A relational database is a database that organizes information into one or more tables.Tables are sometimes referred to as relations. 
+#By convention, commands=clauses are written in capital letters. 
+
+#Some of the most common data types are:
+#1. Integer, a positive or negative whole number 
+#2. Text, a text string 
+#3. Date, the date formatted as YYYY-MM-DD for the year, month, and day 
+#4. Real, a decimal value 
+---------------------------------
+SELECT * FROM celebs;       #select all cols from the table celebs, ***Statements always end in a semi-colon ; 一定要有分号***
+---------------------------------
+CREATE TABLE celebs(id INTEGER, name TEXT, age INTEGER);
+CREATE TABLE table_name (
+    column_1 data_type, 
+    column_2 data_type, 
+    column_3 data_type
+  );
+----------------------------------
+INSERT INTO celebs (id, name, age) VALUES (1, 'Justin Bieber', 21);  #*** quotation marks "TEXT"
+INSERT INTO celebs(id, name, age) VALUES (2,"Beyonce Knowles",33);
+INSERT INTO celebs(id, name, age) VALUES (3, 'Jeremy Lin', 26);
+INSERT INTO celebs(id, name, age) VALUES (4, 'Taylor Swift',26);
+
+SELECT name FROM celebs;
+---------------------------------
+UPDATE celebs
+SET age=22
+WHERE id=1;
+ 
+SELECT * FROM celebs;
+=======================
+UPDATE celebs 
+SET twitter_handle="@taylorswift13"
+WHERE id=4;
+
+SELECT * FROM celebs;
+---------------------------------
+ALTER TABLE celebs ADD COLUMN twitter_handle TEXT;
+
+SELECT * FROM celebs;
+---------------------------------
+UPDATE celebs 
+SET twitter_handle = '@taylorswift13' 
+WHERE id = 4; 
+
+DELETE FROM celebs WHERE twitter_handle IS NULL; #####****
+
+SELECT * FROM celebs;
+----------------------------------
+
