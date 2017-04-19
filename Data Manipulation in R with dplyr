@@ -42,7 +42,7 @@ arrange-reorder the rows
 summarize-calcuate summary statistics
 
 dplyr don't change original data, create a new copy
-########################### Exercise select(df, var1, var2), elect(df, 1:4, -2) 
+########################### Exercise select(df, var1, var2), select(df, 1:4, -2) 
 # You can also use : to select a range of variables and - to exclude some variables
 ########################### Choosing is not losing! The select verb
 #$$$know colname, want to know corresponding index: which(colnames(df)=="nam")
